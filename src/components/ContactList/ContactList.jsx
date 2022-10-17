@@ -1,16 +1,15 @@
-import { ContactLi} from '../ContactLi/ContactLi';
+
 import { Ul } from './ContactList.styled';
 import PropTypes from 'prop-types';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContacts } from "redux/operations";
 import { selectFilters, selectContacts } from "redux/selectors";
+import { ContactLi} from '../ContactLi/ContactLi';
 
-
-export const ContactList = ({  }) => {
+export const ContactList = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
-  // const error = useSelector(getError);
 
   useEffect(() => {
     dispatch(fetchContacts());

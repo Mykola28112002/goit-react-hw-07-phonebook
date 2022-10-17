@@ -18,4 +18,7 @@ export const Button = styled.button`
     border-radius: ${p => p.theme.space[3]}px;
     box-shadow: 1px 4px 3px rgb(0 0 0 / 20%), 0 1px 1px rgb(0 0 0 / 14%), 1px 4px 3px rgb(0 0 0 / 12%);
     cursor: pointer;
+    &.diasable {
+        background-color: grey;
+    }
 `;

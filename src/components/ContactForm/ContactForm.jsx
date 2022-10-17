@@ -4,10 +4,10 @@ import { Label, Button, Input, Forms, Error } from './ContactForm.styled';
 import { useState } from "react";
 import * as yup from 'yup';
 import { useDispatch } from "react-redux";
-import { addContact } from "redux/contactSlice";
 import { nanoid } from 'nanoid'
 import { getContacts } from 'redux/selectors';
 import { useSelector } from "react-redux";
+import { addContacts } from "../../redux/operations";
 
 
 
@@ -21,31 +21,32 @@ export function ContactForm() {
   const [number, setNumber] = useState('');
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
+  
 
-  const handelSabmit = (values, { resetForm }) => { 
+
+  const handleSubmit = (values, { resetForm }) => { 
     const name = values.name;
-      const number = values.number;
+    const phone = values.number;
     const newContact = {
       name,
-      number,
+      phone,
       id: nanoid(),
     };
     const array = contacts.filter(contact => contact.name === name)
     if (array.length !== 0) {
       alert('Such a contact already exists')
     } if (array.length === 0) {
-      dispatch(addContact(newContact))
+      dispatch(addContacts(newContact));
     }
     setName(name)
-    setNumber(number)
+    setNumber(phone)
     resetForm();
   };
-
 
   return <Formik
           validationSchema={scema}
           initialValues={{number,name}}
-          onSubmit={handelSabmit}
+          onSubmit={handleSubmit}
           >
           <Forms action="">
               <Error component='div' name='name'/>

@@ -1,24 +1,28 @@
 import { ContactLi} from '../ContactLi/ContactLi';
 import { Ul } from './ContactList.styled';
 import PropTypes from 'prop-types';
-import { useSelector } from "react-redux";
-import { getContacts,  getFilters} from 'redux/selectors';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchContacts } from "redux/operations";
+import {
+  // getError
+   getContacts
+} from "redux/selectors";
 
 
-
-export const ContactList = ({ onDeleteContactList }) => {
-  const getVizibleContacts = (contacts, filter) => {
-    const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
-  };
+export const ContactList = ({  }) => {
+  const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
-  const filter = useSelector(getFilters);
-  const vizibleContacts = getVizibleContacts(contacts, filter);
+  // const error = useSelector(getError);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
+  
 
   return (<Ul>
-    {vizibleContacts.map((contacts) => (<ContactLi contacts={contacts} onDeleteContactList={onDeleteContactList} key={contacts.id} />))}
+    {contacts.map((contacts) => (<ContactLi contacts={contacts}  key={contacts.id} />))}
   </Ul>)
 };
 ContactList.propTypes = {

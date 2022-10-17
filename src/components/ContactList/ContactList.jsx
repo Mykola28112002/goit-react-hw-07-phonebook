@@ -4,26 +4,34 @@ import PropTypes from 'prop-types';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContacts } from "redux/operations";
-import {
-  // getError
-   getContacts
-} from "redux/selectors";
+import { selectFilters, selectContacts } from "redux/selectors";
 
 
 export const ContactList = ({  }) => {
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
   // const error = useSelector(getError);
 
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  
+  const getVizibleContacts = (contacts, filter) => {
+    const normalizedFilter = filter
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter)
+    );
+  };
+  const filter = useSelector(selectFilters).filter;
 
-  return (<Ul>
-    {contacts.map((contacts) => (<ContactLi contacts={contacts}  key={contacts.id} />))}
+  const vizibleContacts = getVizibleContacts(contacts, filter);
+  
+  if (vizibleContacts.length !== 0) {
+    return (<Ul>
+    {vizibleContacts.map((contacts) => (<ContactLi contacts={contacts}  key={contacts.id} />))}
   </Ul>)
+  }
+  
 };
 ContactList.propTypes = {
   contacts: PropTypes.arrayOf(

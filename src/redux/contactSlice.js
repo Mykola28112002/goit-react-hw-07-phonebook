@@ -43,22 +43,12 @@ const contactsSlice = createSlice({
     [deleteContacts.fulfilled](state, action) {
       state.isLoading = false;
         state.error = null;
-        console.log(state.items)
-        // const index = state.items.findIndex(contacts => contacts.id === action.payload);
-        // console.log(action.payload)
-    //   state.items.splice(index);
+        console.log(state.items);
+        const index = state.items.findIndex(contacts => contacts.id === action.payload.id);
+        console.log(action.payload);
+        console.log(index);
+      state.items.splice(index,1);
     },
-    [deleteContacts.rejected]: handleRejected,
-    // [toggleCompleted.pending]: handlePending,
-    // [toggleCompleted.fulfilled](state, action) {
-    //   state.isLoading = false;
-    //   state.error = null;
-    //   const index = state.items.findIndex(
-    //     task => task.id === action.payload.id
-    //   );
-    //   state.items.splice(index, 1, action.payload);
-    // }
-    // [toggleCompleted.rejected]: handleRejected,
   },
 });
 

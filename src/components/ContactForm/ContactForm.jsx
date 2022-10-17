@@ -4,8 +4,7 @@ import { Label, Button, Input, Forms, Error } from './ContactForm.styled';
 import { useState } from "react";
 import * as yup from 'yup';
 import { useDispatch } from "react-redux";
-import { nanoid } from 'nanoid'
-import { getContacts } from 'redux/selectors';
+ import { selectContacts } from 'redux/selectors';
 import { useSelector } from "react-redux";
 import { addContacts } from "../../redux/operations";
 
@@ -19,7 +18,7 @@ const scema = yup.object().shape({
 export function ContactForm() { 
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
   
 
@@ -30,7 +29,6 @@ export function ContactForm() {
     const newContact = {
       name,
       phone,
-      id: nanoid(),
     };
     const array = contacts.filter(contact => contact.name === name)
     if (array.length !== 0) {
